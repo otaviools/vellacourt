@@ -1,0 +1,197 @@
+:root {
+  /* Paleta Vellacourt — referências Mobbin: KOBU (marfim), In Common With (penumbra quente),
+     Going (bordeaux). */
+  --noir: #0e0c0a; /* Noir fumé */
+  --ivory: #efe6d6; /* Ivoire */
+  --champagne: #c3a274; /* Champagne */
+  --bordeaux: #5b1c26; /* Bordeaux */
+
+  --bg: var(--noir);
+  --bg-raised: #16130f;
+  --bg-soft: #1d1914;
+  --line: rgba(239, 230, 214, 0.1);
+  --line-strong: rgba(239, 230, 214, 0.22);
+  --text: var(--ivory);
+  --text-muted: #a99d89;
+  --text-faint: #6f675b;
+  /* --gold mantido como nome do acento por compatibilidade; agora é champagne */
+  --gold: var(--champagne);
+  --gold-soft: rgba(195, 162, 116, 0.14);
+
+  /* Newsreader: serifa editorial de contraste moderado, legível em qualquer tamanho */
+  --serif: 'Newsreader', 'Georgia', 'Times New Roman', serif;
+  --sans: 'Jost', 'Futura', system-ui, -apple-system, sans-serif;
+  /* Rótulos técnicos: Nº, FIG., medidas, códigos */
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --radius: 4px;
+  --gutter: clamp(16px, 4vw, 56px);
+  --max: 1320px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  /* Páginas de carro definem --page-bg com um tom profundo da pintura */
+  background: var(--page-bg, var(--bg));
+  transition: background-color 0.8s var(--ease);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--bordeaux);
+  color: var(--ivory);
+}
+
+:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.mono {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Selo de edição limitada */
+.ltd {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ltd::before {
+  content: '◆';
+  font-size: 7px;
+}
+
+.display {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.display em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn--solid {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+.btn--solid:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--bg);
+}
+
+/* View transitions entre páginas */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.45s;
+  animation-timing-function: var(--ease);
+}
+/* O carro "voa" da origem (card, índice, hero) até o palco da ficha */
+::view-transition-group(car-stage) {
+  animation-duration: 0.85s;
+  animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+}
+::view-transition-old(car-stage),
+::view-transition-new(car-stage) {
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
